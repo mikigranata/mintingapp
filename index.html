@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minting Family</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://i.postimg.cc/x8B29KdS/giphy-unscreen-1.gif" type="image/x-icon">
+</head>
+
+<body>
+    <div class="container">
+        <h1>My Minting Dapp</h1>
+        <button id="connect-button" onclick="connectWallet()">Connect Wallet</button>
+        <div id="wallet-info" style="margin-top: 1rem; display: none;">
+            <p>Connected Wallet: <span id="address"></span></p>
+            <button onclick="disconnectWallet()">Disconnect</button>
+            <div id="start-app" style="margin-top: 1rem; display: none;">
+                <button onclick="startApp()">Start the App</button>
+            </div>
+            <div id="father-section" style="margin-top: 1rem; display: none;">
+                <h2>WHO HAS INVITED YOU?</h2>
+                <p>Send here your inviter address</p>
+                <input type="text" id="inviter-address" placeholder="Inviter's Address">
+                <button onclick="sendInvitation()">Send Invitation</button>
+                <p id="father-address"></p>
+            </div>
+            <div id="minting-section" style="margin-top: 1rem; display: none;">
+                <div id="minting-input">
+                    <input type="number" id="minting-amount" placeholder="Amount to Mint">
+                    <button id="minting-button" onclick="approveAndMint()">Approve and Mint</button>
+                </div>
+                <img src="https://i.postimg.cc/x8B29KdS/giphy-unscreen-1.gif" style="width:10%;"/>
+                <div id="deposit-display" style="display: none;">
+                    <p>Deposit Amount: <span id="deposit-amount"></span> USDT</p>
+                </div>
+                <p>Network Gain: <span id="network-gain"></span> USDT</p>
+                <button id="check-reward-button" onclick="checkReward()">Check Reward</button>
+                <br>
+                <h1>Daily interest rate: 1,25 %</h1>
+                <p>Reward: <span id="reward-amount"></span> USDT</p>
+            </div>
+            <div id="withdraw-section" style="margin-top: 1rem; display: none;">
+                <button class="withdraw" id="withdraw-button" onclick="withdrawReward()" style="width:100%;">Withdraw Reward</button>
+            </div>
+            <p>Referral Count: <span id="referral-count"></span></p>
+        </div>
+        <p id="status-message" style="margin-top: 1rem; padding: 1%; background: yellow; color:black;"></p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
+    <script src="https://unpkg.com/web3modal@1.9.4/dist/index.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
