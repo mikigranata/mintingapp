@@ -158,7 +158,7 @@ const erc20Abi = [
 
 const mintingFamilyAddress = '0x9f39c9D414D81c8Be38e4e60815fD90d8c954F7a';
 const usdtAddress = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
-const polygonMainnetChainId = '0x89'; // Chain ID for Polygon Mainnet
+const polygonMainnetChainId = '0x56'; // Chain ID for Polygon Mainnet
 
 window.addEventListener('load', async () => {
     const providerOptions = {
