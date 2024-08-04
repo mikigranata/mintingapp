@@ -156,8 +156,9 @@ const erc20Abi = [
     }
 ];
 
-const mintingFamilyAddress = '0x9f39c9D414D81c8Be38e4e60815fD90d8c954F7a';
-const usdtAddress = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
+const mintingFamilyAddress = '0xc344596D663348dEC18dF1ba5143Bb8eC10e22fC';
+const usdtAddress = '0x01Cc48842F4f08B65635c15Bb220b6EF1b76D0B3';
+const polygonMainnetChainId = '0x89'; // Chain ID for Polygon Mainnet
 
 window.addEventListener('load', async () => {
     const providerOptions = {
@@ -196,6 +197,9 @@ async function connectWallet() {
 
         provider.on("chainChanged", (chainId) => {
             console.log("chainChanged", chainId);
+            if (chainId !== polygonMainnetChainId) {
+                switchNetwork();
+            }
         });
 
         provider.on("disconnect", (code, reason) => {
@@ -207,6 +211,11 @@ async function connectWallet() {
         accounts = await web3.eth.getAccounts();
         mintingFamilyContract = new web3.eth.Contract(mintingFamilyAbi, mintingFamilyAddress);
 
+        const chainId = await web3.eth.getChainId();
+        if (chainId !== parseInt(polygonMainnetChainId, 16)) {
+            await switchNetwork();
+        }
+
         document.getElementById('connect-button').style.display = 'none';
         document.getElementById('wallet-info').style.display = 'block';
         document.getElementById('address').innerText = accounts[0];
@@ -214,6 +223,37 @@ async function connectWallet() {
         updateUserInfo(accounts[0]);
     } catch (err) {
         console.log(err);
+    }
+}
+
+async function switchNetwork() {
+    try {
+        await provider.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: polygonMainnetChainId }],
+        });
+    } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        if (switchError.code === 4902) {
+            try {
+                await provider.request({
+                    method: 'wallet_addEthereumChain',
+                    params: [{
+                        chainId: polygonMainnetChainId,
+                        chainName: 'Polygon Mainnet',
+                        rpcUrls: ['https://polygon-rpc.com/'],
+                        nativeCurrency: {
+                            name: 'MATIC',
+                            symbol: 'MATIC',
+                            decimals: 18
+                        },
+                        blockExplorerUrls: ['https://polygonscan.com/']
+                    }],
+                });
+            } catch (addError) {
+                console.error(addError);
+            }
+        }
     }
 }
 
