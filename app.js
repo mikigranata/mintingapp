@@ -156,9 +156,9 @@ const erc20Abi = [
     }
 ];
 
-const mintingFamilyAddress = '0x9f39c9D414D81c8Be38e4e60815fD90d8c954F7a';
-const usdtAddress = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
-const polygonMainnetChainId = '0x56'; // Chain ID for Polygon Mainnet
+const mintingFamilyAddress = '0x41889E9aD28931a7C7347259E8B001c518C1E843';
+const usdtAddress = '0x55d398326f99059ff775485246999027b3197955';
+const bscMainnetChainId = '0x38'; // Chain ID for Binance Smart Chain Mainnet
 
 window.addEventListener('load', async () => {
     const providerOptions = {
@@ -197,7 +197,7 @@ async function connectWallet() {
 
         provider.on("chainChanged", (chainId) => {
             console.log("chainChanged", chainId);
-            if (chainId !== polygonMainnetChainId) {
+            if (chainId !== bscMainnetChainId) {
                 switchNetwork();
             }
         });
@@ -212,7 +212,7 @@ async function connectWallet() {
         mintingFamilyContract = new web3.eth.Contract(mintingFamilyAbi, mintingFamilyAddress);
 
         const chainId = await web3.eth.getChainId();
-        if (chainId !== parseInt(polygonMainnetChainId, 16)) {
+        if (chainId !== parseInt(bscMainnetChainId, 16)) {
             await switchNetwork();
         }
 
@@ -230,7 +230,7 @@ async function switchNetwork() {
     try {
         await provider.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: polygonMainnetChainId }],
+            params: [{ chainId: bscMainnetChainId }],
         });
     } catch (switchError) {
         // This error code indicates that the chain has not been added to MetaMask.
@@ -239,15 +239,15 @@ async function switchNetwork() {
                 await provider.request({
                     method: 'wallet_addEthereumChain',
                     params: [{
-                        chainId: polygonMainnetChainId,
-                        chainName: 'Polygon Mainnet',
-                        rpcUrls: ['https://polygon-rpc.com/'],
+                        chainId: bscMainnetChainId,
+                        chainName: 'Binance Smart Chain Mainnet',
+                        rpcUrls: ['https://bsc-dataseed.binance.org/'],
                         nativeCurrency: {
-                            name: 'MATIC',
-                            symbol: 'MATIC',
+                            name: 'BNB',
+                            symbol: 'BNB',
                             decimals: 18
                         },
-                        blockExplorerUrls: ['https://polygonscan.com/']
+                        blockExplorerUrls: ['https://bscscan.com/']
                     }],
                 });
             } catch (addError) {
