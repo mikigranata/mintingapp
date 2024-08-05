@@ -15,50 +15,6 @@
         <button id="connect-button" onclick="connectWallet()">Connect Wallet</button>
         <div id="wallet-info" style="margin-top: 1rem; display: none;">
             <p>Connected Wallet: <span id="address"></span></p>
-              <div id="countdown"> 
-                <h2>Minting Will Start In</h2> 
-                <div id="timer"></div> 
-            </div> 
-            <br> 
-            <script> 
-                function countdown(endDate) { 
-                    let timer, days, hours, minutes, seconds; 
-                    endDate = new Date(endDate).getTime(); 
- 
-                    if (isNaN(endDate)) return; 
- 
-                    timer = setInterval(calculate, 1000); 
- 
-                    function calculate() { 
-                        let now = new Date().getTime(); 
-                        let remaining = parseInt((endDate - now) / 1000); 
- 
-                        if (remaining <= 0) { 
-                            clearInterval(timer); 
-                            document.getElementById("timer").innerHTML = "The countdown is over!"; 
-                            return; 
-                        } 
- 
-                        days = parseInt(remaining / 86400); 
-                        remaining %= 86400; 
-                        hours = parseInt(remaining / 3600); 
-                        remaining %= 3600; 
-                        minutes = parseInt(remaining / 60); 
-                        seconds = parseInt(remaining % 60); 
- 
-                        document.getElementById("timer").innerHTML =  
-                            days + "d " +  
-                            hours + "h " +  
-                            minutes + "m " +  
-                            seconds + "s"; 
-                    } 
-                } 
- 
-                (function () { 
-                    const endDate = new Date('2024-08-05T16:00:00Z'); // 18:00 GMT+2 is 16:00 UTC 
-                    countdown(endDate); 
-                }()); 
-            </script>
             <button onclick="disconnectWallet()">Disconnect</button>
             <div id="start-app" style="margin-top: 1rem; display: none;">
                 <button onclick="startApp()">Start the App</button>
